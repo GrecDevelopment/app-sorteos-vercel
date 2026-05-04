@@ -1,0 +1,25 @@
+{
+    "name": "grupo-grec-sorteos-api",
+    "version": "1.0.0",
+    "description": "Backend API para App Sorteos Grupo Grec - Escaneo de facturas con OCR",
+    "main": "index.js",
+    "scripts": {
+          "dev": "node --watch api/webhook.js",
+          "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+          "grupo-grec",
+          "sorteos",
+          "factura",
+          "ocr",
+          "google-vision",
+          "google-sheets"
+    ],
+    "author": "Grupo Grec",
+    "license": "MIT",
+    "dependencies": {
+          "@google-cloud/vision": "^3.4.0",
+          "googleapis": "^139.0.0",
+          "dotenv": "^16.4.5"
+    }
+}
