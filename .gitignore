@@ -1,0 +1,33 @@
+# Credenciales y variables de entorno
+.env
+.env.local
+.env.*.local
+.env*.json
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Vercel
+.vercel/
+out/
+
+# Credenciales descargadas de Google Cloud
+*-service-account*.json
+*-key*.json
+credentials/
+!credentials/.gitkeep
+
+# Logs
+logs/
+*.log
