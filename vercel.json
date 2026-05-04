@@ -1,0 +1,13 @@
+{
+    "version": 2,
+  "env": {
+        "GOOGLE_CREDENTIALS": "@google_credentials",
+        "GOOGLE_SHEETS_ID": "@google_sheets_id"
+  },
+  "functions": {
+    "api/**/*.js": {
+            "memory": 1024,
+            "maxDuration": 30
+    }
+  }
+}
