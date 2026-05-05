@@ -100,6 +100,7 @@ async function handleRegister(req, res, sheetsClient) {
     const password = req.body.password || req.body.Contraseña;
 
     console.log("🔐 Procesando REGISTRO");
+    console.log("Request body completo:", JSON.stringify(req.body, null, 2));
     console.log("DNI:", dni);
     console.log("Email:", email);
 
@@ -310,8 +311,4 @@ if (require.main === module) {
   const PORT = process.env.PORT || 3000;
     server.listen(PORT, () => {
           console.log(`🚀 Servidor ejecutando en puerto ${PORT}`);
-          console.log(`POST http://localhost:${PORT}/api/webhook`);
-    });
-}
-
-module.exports = handler;
+          console.log(`POST
