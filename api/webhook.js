@@ -54,12 +54,24 @@ async function handler(req, res) {
 
   try {
         // PARSEAR BODY MANUALMENTE (Vercel no parsea automáticamente)
+        // Soportar JSON, form-encoded, y query parameters
         if (typeof req.body === 'string') {
             try {
+                // Intentar como JSON primero
                 req.body = JSON.parse(req.body);
             } catch (e) {
-                req.body = {};
+                // Si JSON falla, intentar como form-encoded
+                try {
+                    const params = new URLSearchParams(req.body);
+                    req.body = Object.fromEntries(params);
+                } catch (e2) {
+                    req.body = {};
+                }
             }
+        }
+        if (!req.body || Object.keys(req.body).length === 0) {
+            // Si aún no hay body, intentar query parameters
+            req.body = req.query || {};
         }
         if (!req.body) {
             req.body = {};
