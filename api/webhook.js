@@ -55,13 +55,21 @@ async function handler(req, res) {
   try {
         validateEnv();
 
+      // DEBUG: Log all request details
+      console.log("📦 Webhook recibido de Glide");
+      console.log("Method:", req.method);
+      console.log("URL:", req.url);
+      console.log("Headers:", JSON.stringify(req.headers, null, 2));
+      console.log("Body type:", typeof req.body);
+      console.log("Body keys:", Object.keys(req.body || {}));
+      console.log("Body completo:", JSON.stringify(req.body, null, 2));
+
       const { action = "upload_invoice", Action } = req.body;
 
       // Normalizar la acción (aceptar mayúsculas y minúsculas)
       const normalizedAction = (action || Action || "upload_invoice").toLowerCase();
 
-      console.log("📦 Webhook recibido de Glide");
-        console.log("Acción:", normalizedAction);
+      console.log("Acción:", normalizedAction);
 
       const sheetsClient = googleSheets.initializeSheetsClient();
 
@@ -300,15 +308,4 @@ if (require.main === module) {
           });
           req.on("end", async () => {
                   try {
-                            req.body = body ? JSON.parse(body) : {};
-                  } catch {
-                            req.body = {};
-                  }
-                  await handler(req, res);
-          });
-    });
-
-  const PORT = process.env.PORT || 3000;
-    server.listen(PORT, () => {
-          console.log(`🚀 Servidor ejecutando en puerto ${PORT}`);
-          console.log(`POST
+                         
