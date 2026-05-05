@@ -19,4 +19,8 @@
     "license": "MIT",
     "dependencies": {
           "@google-cloud/vision": "^3.4.0",
-          "googleapis": "^139.0.0
+          "googleapis": "^139.0.0",
+          "dotenv": "^16.4.5",
+          "bcrypt": "^5.1.1"
+    }
+}

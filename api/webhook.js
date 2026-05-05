@@ -55,24 +55,27 @@ async function handler(req, res) {
   try {
         validateEnv();
 
-      const { action = "upload_invoice" } = req.body;
+      const { action = "upload_invoice", Action } = req.body;
+
+      // Normalizar la acción (aceptar mayúsculas y minúsculas)
+      const normalizedAction = (action || Action || "upload_invoice").toLowerCase();
 
       console.log("📦 Webhook recibido de Glide");
-        console.log("Acción:", action);
+        console.log("Acción:", normalizedAction);
 
       const sheetsClient = googleSheets.initializeSheetsClient();
 
       // RUTAR POR ACCIÓN
-      if (action === "register") {
+      if (normalizedAction === "register") {
               return handleRegister(req, res, sheetsClient);
-      } else if (action === "login") {
+      } else if (normalizedAction === "login") {
               return handleLogin(req, res, sheetsClient);
-      } else if (action === "upload_invoice") {
+      } else if (normalizedAction === "upload_invoice") {
               return handleUploadInvoice(req, res, sheetsClient);
       } else {
               return res.status(400).json({
                         success: false,
-                        error: "Acción no válida. Use: register, login, o upload_invoice",
+                        error: "Acción no válida. Recibido: " + normalizedAction,
               });
       }
   } catch (error) {
@@ -312,4 +315,3 @@ if (require.main === module) {
 }
 
 module.exports = handler;
-                                                                                                                                                                                                                                                                                                                                                                                                                                       
