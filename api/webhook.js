@@ -53,6 +53,18 @@ async function handler(req, res) {
   }
 
   try {
+        // PARSEAR BODY MANUALMENTE (Vercel no parsea automáticamente)
+        if (typeof req.body === 'string') {
+            try {
+                req.body = JSON.parse(req.body);
+            } catch (e) {
+                req.body = {};
+            }
+        }
+        if (!req.body) {
+            req.body = {};
+        }
+
         validateEnv();
 
       // DEBUG: Log all request details
@@ -251,11 +263,18 @@ async function handleUploadInvoice(req, res, sheetsClient) {
         );
         ocrData = googleVision.parseInvoiceText(extractedText);
 
+        // Si no se proporcionó invoice_number, usar el extraído del OCR
         if (!invoice_number && ocrData.invoice_number) {
-          ocrData.invoice_number = invoice_number || ocrData.invoice_number;
+          ocrData.invoice_number = ocrData.invoice_number;
+        } else if (invoice_number) {
+          ocrData.invoice_number = invoice_number;
         }
+
+        // Si no se proporcionó invoice_amount, usar el extraído del OCR
         if (!invoice_amount && ocrData.invoice_amount) {
-          ocrData.invoice_amount = invoice_amount || ocrData.invoice_amount;
+          ocrData.invoice_amount = ocrData.invoice_amount;
+        } else if (invoice_amount) {
+          ocrData.invoice_amount = invoice_amount;
         }
       } catch (ocrError) {
         console.warn("⚠️  Error en OCR, usando datos manuales:", ocrError.message);
